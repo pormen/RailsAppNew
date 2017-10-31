@@ -1,0 +1,255 @@
+<link href='<%= asset_url("css/bootstrap.min.css") %>' rel="stylesheet" type="text/css">
+<link href='<%= asset_url("css/font-awesome.min.css") %>' rel="stylesheet">
+<link href='<%= asset_url("css/style-55.css") %>' rel="stylesheet">
+<link href='<%= asset_url("css2/stylesLD.css") %>' rel="stylesheet" type="text/css">
+
+<h4><%= link_to '<< volver', asformularies_path %></h4>
+
+<div class="container">
+
+      <div class="sidebar1">
+        <div align="left">
+
+        <h4>Nuevo Formulario de Atención Social</h4>
+        <%= render 'form', asformulary: @asformulary %>
+        <%# button_to "Nuevo préstamo", new_loanformulary_path,method: "get", form: {target: '_blank'}, class: "button button1" %>
+        
+          <%# link_to(image_tag(asset_url("trans.png"), class: 'bg-green-ld'), new_loanformulary_path,  :method => :get) %>
+
+          
+
+          
+
+      </div>
+    
+    <!-- end .sidebar1 --></div>
+
+
+  <div class="contentForm">
+       
+    <br>
+   
+    <div class="ui-55">
+        <div class="sidebar" style="position: fixed;"> 
+          <!-- Nav tabs -->
+          <ul class="list-unstyled">
+            <li class="active"><a href="#one" role="tab" data-toggle="tab"> Asistencia Social</a></li>
+            <li><a href="#two" role="tab" data-toggle="tab"> Beneficios </a></li>
+            <li><a href="#three" role="tab" data-toggle="tab"> Prestamos </a></li>
+            <li><a href="#four" role="tab" data-toggle="tab"> Capacitaciones </a></li>
+            <li><a href="#five" role="tab" data-toggle="tab"> Remuneraciones </a></li>
+          </ul>
+        </div>
+      <div class="mainbar"> 
+        <!-- Tab panes -->
+
+                    <label for="textfield">Resumen Trabajador:
+                    <br>
+                    <% if params[:asformulary] && params[:asformulary][:rut_atendido] %>
+                      <% employee = Employee.where(rut: params[:asformulary][:rut_atendido]).where(estado: "A").order('created_at DESC') %>
+                      <% if employee.empty? == false %>
+                        <% #employee.each do |emple| %>
+                        <tr>
+                          <td><%= employee[0].nombre %></td>
+                          <td><%= employee[0].rut %></td><br>
+                          <% obraname = Obra.where(codigo: employee[0].cencos)  %>
+                          <td><%= obraname[0].nombre %></td>
+                          <br>
+
+                        </tr>
+                        <%#end%>
+                      <% else %>
+                        <h5>No podemos desplegar un resumen de este trabajador por alguno de los siguientes motivos:</h5>
+                        <h6>- El trabajador no posee ficha en Payrroll (subcontrato)</h6>
+                        <h6>- El trabajador no se encuentra activo</h6>
+                      <%end%>
+    
+                        
+                    <%end%>
+
+
+
+                  </label> 
+                  <br>
+
+
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="one">
+
+
+
+
+                  <table >
+                  <thead>
+                    <tr>
+                      <th width="(100/x)%">Fecha</th>
+                      <th width="(100/x)%">Tipo Consulta</th>
+                      
+                      <th width="(100/x)%">Status Caso</th>
+                      <th width="(100/x)%">Obra</th>
+                      <th width="(100/x)%">Nº Atencion</th>
+                      <th width="(100/x)%">Telefono</th>
+                      <th width="(100/x)%">Comentario</th>
+                    </tr>
+                  </thead>
+                    <tbody>
+                      <% if params[:asformulary] && params[:asformulary][:rut_atendido] %>
+                      <% logas = Loga.where(:rut_atendido => params[:asformulary][:rut_atendido]).order('created_at DESC').take(20) %>
+                      
+                      <% logas.each do |loga| %>
+                        <tr>
+                          
+                          
+                          <td><%= loga.created_at.strftime("%d %b %y") %></td>
+                          <td><%= loga.aspcategory_name %></td>
+                          
+                          
+                
+                          <% if loga.estado == true %>
+                          <td><%="Cerrado"%></td>
+                          <% else %>
+                          <td><%= "Abierto"%></td>
+                          <% end %>
+
+
+                          <td><%= loga.codigo_obra %></td>
+                          <td><%= "N/A" %></td>
+                          <td><%= loga.telefono %></td>
+                          <td><%= loga.descripcion %></td>
+
+                        </tr>
+                     
+                      <% end %>
+                      <% end %>
+                    </tbody>
+                  </table>
+            </div>
+          <div role="tabpanel" class="tab-pane fade" id="two">
+
+          <table >
+
+           <tr>
+            <th width="(100/x)%">Beneficio</th>
+            <th width="(100/x)%">Rut Trabajador</th>
+            <th width="(100/x)%">Rut Beneficiario</th>
+            <th width="(100/x)%">Relación</th>
+            <th width="(100/x)%">F.Nacimiento</th>
+            <th width="(100/x)%">Fecha</th>
+            <th width="(100/x)%">CentroCosto</th>
+           </tr>
+           <tbody>
+             
+               <% if params[:asformulary] && params[:asformulary][:rut_atendido] %>
+               <% assign = Assignbenefit.where(:rut_trabajador => params[:asformulary][:rut_atendido]).order('created_at DESC').take(20) %>
+
+               <% assign.each do |loga| %>
+                        <tr>
+                          
+                          <td><%= loga.benefit.nombre %></td>
+                          <td><%= loga.rut_trabajador %></td>
+                          <td><%= loga.rut_beneficiario %></td>
+                          <td><%= loga.relacion %></td>
+                          <td><%= loga.fecha_nacimiento %></td>
+
+                          <td><%= loga.created_at.strftime("%d %b %y") %></td>
+                          
+                          <td><%= loga.obra_id %></td>
+                          
+
+                        </tr>
+                     
+                      <% end %>
+
+
+
+               <% end %>
+
+           </tbody>
+        </table>
+                
+          </div>
+              <div role="tabpanel" class="tab-pane fade" id="three">
+               
+                  <table >
+                  <thead>
+                    <tr>
+                      
+                      <th width="(100/x)%">Empresa</th>
+                      <th width="(100/x)%">Monto Solicitado</th>
+                      <th width="(100/x)%">Por pagar</th>
+                      <th width="(100/x)%">Motivo</th>
+                      <th width="(100/x)%">Estado</th>
+
+                    </tr>
+                  </thead>
+                    <tbody>
+                      <% if params[:asformulary] && params[:asformulary][:rut_atendido] %>
+                      <% logloan = Logloan.where(:rut_solicitante => params[:asformulary][:rut_atendido]).order('created_at DESC').take(10) %>
+                      <% loan = Loanformulary.where(:rut_solicitante => params[:asformulary][:rut_atendido]).order('created_at DESC').take(20) %>
+
+                      <% logloan.each do |logl| %>
+                        <tr>
+                          
+                          
+                          
+                          <td><%= logl.empresa %></td>
+                          <td><%= logl.monto_solicitado %></td>
+                          <td><%= logl.por_pagar %></td>
+                          <td><%= logl.motivo_solicitud %></td>
+                          <td><%= logl.estado %></td>
+                          
+
+                        </tr>
+                      <% end %>
+
+                      <% loan.each do |logl| %>
+                      <tr>
+                          
+                          
+                          
+                          <td></td>
+                          <td><%= logl.monto_solicitado %></td>
+                          <td></td>
+                          <td><%= logl.motivo_solicitud %></td>
+                          <td><%= logl.estado %></td>
+                          
+
+                        </tr>
+                      <% end %>
+
+
+                      <% end %>
+                    </tbody>
+                  </table>
+
+
+              </div>
+              <div role="tabpanel" class="tab-pane fade" id="four">
+                
+              </div>
+              <div role="tabpanel" class="tab-pane fade" id="five">
+                
+              </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Javascript files --> 
+    <!-- jQuery --> 
+    <script src='<%= asset_url("jquery.js") %>'></script> 
+    <!-- Bootstrap JS --> 
+    <script src='<%= asset_url("bootstrap.min.js") %>'></script> 
+    <!-- Placeholder JS --> 
+    <script src='<%= asset_url("placeholder.js") %>'></script> 
+    <!-- Respond JS for IE8 --> 
+    <script src='<%= asset_url("respond.min.js") %>'></script> 
+    <!-- HTML5 Support for IE --> 
+    <script src='<%= asset_url("html5shiv.js") %>'></script> 
+    
+    <!-- end .content --></div>
+
+<!-- end .container --></div>
+	
+
+
+

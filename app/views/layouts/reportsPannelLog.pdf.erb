@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+<head>
+<body>
+
+<div id="header"> 
+ <img src='<%= asset_url("headerCarta.png")%>'></img>
+</div>
+<div>
+
+<h2>Beneficios por Periodo</h2>
+
+<%
+			obra = Rails.application.config.obra
+			obraid = Rails.application.config.obraId
+			event1 = Rails.application.config.event1
+			event2 = Rails.application.config.event2
+			fecha1 = Rails.application.config.fecha1
+			fecha2 = Rails.application.config.fecha2
+
+%>
+
+
+        				<% if obra && event1 && event2 %>
+        				<h3><%= Obra.find(obraid).nombre %> - Periodo <%= fecha1 + " a " + fecha2  %> </h3>
+
+        				<% ob = Obra.find(obraid).codigo %>
+
+        				<table>
+							  <thead>
+							    <tr>
+							      <th>Nombre Beneficio</th>
+							      <th>Inscritos</th>
+							  	
+
+					      
+					              <th>Costo Empresa</th>
+					              
+							     
+							    </tr>
+							  </thead>
+							  <tbody>
+
+
+							  	
+							  	<% asignacion = Assignbenefit.where(obra_id: obraid).where(:created_at => fecha1...fecha2).group("benefit_id") %>
+							  	<% benefitscount = Benefit.all  %>
+							  	<%i = 0 %>
+							  	<%ins = Array.new %>
+							  	<%totale = Array.new %>
+
+							  	<% asignacion.each do |a| %>
+							  	<%# ins[i] = a.benefit_id %>
+							  	<% ins[i] = Assignbenefit.where(obra_id: obraid).where(:created_at => fecha1...fecha2).where(benefit_id: a.benefit_id).count %>
+							  	<% totale[i] = Benefit.find(a.benefit_id).costoempresa %>
+							  	<% i = i+1 %>
+
+							  	<% end %>
+
+							  	<%i = 0 %>
+							  	
+							  	<% asignacion.each do |a| %>
+							  	<tr>
+							  	<td><%= a.benefit.nombre %></td>
+							  	<td><%= ins[i] %></td>
+							  	<td>$<%= ins[i]*totale[i] %></td>
+							  	</tr>
+							  	<% i = i+1 %>
+
+							  	<%end %>
+							  	
+							  	
+
+							  	
+
+
+							  </tbody>
+
+						</table>
+
+
+
+
+
+        				<% end %>
+
+</div>
+
+<div id="footer"> 
+  <img src='<%= asset_url("footer.png")%>'>
+</img>
+</div>
+</body>
+</html>

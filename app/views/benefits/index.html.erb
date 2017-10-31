@@ -1,0 +1,61 @@
+<p id="notice"><%= notice %></p>
+<link href='<%= asset_url("css/bootstrap.min.css") %>' rel="stylesheet" type="text/css">
+<link href='<%= asset_url("css2/stylesLD.css") %>' rel="stylesheet" type="text/css">
+
+
+
+<div class="container">
+
+  <div class="content">
+    
+    <div style="box-shadow:0px 0px 15px rgba(0,0,0,0.1);">
+
+    <h3>Lista Beneficios</h3>
+
+    <div align="center">
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Estado</th>
+            <th>Area Beneneficio</th>
+            <th>Costo empresa</th>
+            <th>Costo trabajador</th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @benefits.each do |benefit| %>
+            <tr>
+              <td><%= benefit.nombre %></td>
+              <%if benefit.is_active  %>
+                <td> Activo </td>
+                <%else %>
+                <td> No activo</td>
+                <%end %>
+              <td><%= benefit.areabenefit.nombre %></td>
+              <td><%= benefit.costoempresa %></td>
+              <td><%= benefit.costotrabajador %></td>
+              
+              <td><%= link_to 'Mostrar', benefit %></td>
+              <td><%= link_to 'Actualizar', edit_benefit_path(benefit) %></td>
+              <td><%= link_to 'Eliminar', benefit, method: :delete, data: { confirm: 'Está seguro?' } %></td>
+              <td><%= link_to 'Activar/desactivar', is_active_benefit_path(benefit) %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <br>
+
+      <%# link_to 'New Benefit', new_benefit_path %>
+      <button onclick="location.href='<%= new_benefit_path %>'" type="button" class="btn btn-green btn-lg btn-block">Crear Nuevo Beneficio</button>
+    </div>
+
+
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+<link href='<%= asset_url("css/bootstrap.min.css") %>' rel="stylesheet" type="text/css">
+<link href='<%= asset_url("css/style-273.css") %>' rel="stylesheet">
+<link href='<%= asset_url("css/font-awesome.min.css") %>' rel="stylesheet">
+<link href='<%= asset_url("css/style-55.css") %>' rel="stylesheet">
+<link href='<%= asset_url("css/style-37.css") %>' rel="stylesheet" type="text/css">
+<link href='<%= asset_url("css2/stylesLD.css") %>' rel="stylesheet" type="text/css">
+
+
+<h1>Trabajadores</h1>
+
+<%= link_to('Actualizar Trabajadores', {:action=>'index', :name => "actualizar"}, data: {:confirm=>'¿Está seguro? Esta operación podria tomar algunos minutos.'}) %>
+
+
+<div class="ui-302">
+
+<div class="status-two">
+          <div class="row">
+            <div class="col-md-3">
+              <!-- Item Starts -->
+              <div class="item">
+                <!-- Heading -->
+                <h4>Fichas Cargadas</h4>
+                <!-- Big Number -->
+                <h5 class="green"><%=Employee.count%></h5>
+                <!-- Sub-Title -->
+              </div>
+              <!-- Item Ends -->
+            </div>
+
+            </div>
+          </div>
+        </div>
+
+
+<br>
+
+<%# link_to 'New Employee', new_employee_path %>

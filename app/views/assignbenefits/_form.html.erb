@@ -1,0 +1,122 @@
+
+
+
+<%= form_with(model: assignbenefit, local: true) do |form| %>
+  <% if assignbenefit.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(assignbenefit.errors.count, "error") %> error prohibe guardar este formulario. Regrese atrás y complete la información necesaria.</h2>
+
+      <ul>
+      <% assignbenefit.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <br>
+    <b>Si el beneficio es para un familiar, cree un familiar en el siguiente <%= link_to 'enlace', familiartrabajadors_path, target: :_blank %>, y recargue esta página.</b>
+  <br>
+  <br>
+
+  <div class="field">
+        <%= form.label :areabenefit_id, "Area de beneficio" %><br>
+        <%= form.collection_select(:areabenefit_id, Areabenefit.where(is_active: true).order('nombre ASC'), :id, :nombre, {:prompt => "Seleccione área de beneficio"},{:class => "areabenefit_selection", style: "width:220px"}) %>
+      </div>
+      <br>
+      <div class="field">
+        <%= form.label :benefit_id, "Beneficio" %><br>
+        <%= form.collection_select(:benefit_id, Benefit.where(is_active: true).order('nombre ASC'), :id, :nombre, {:prompt => "Seleccione un beneficio"}, {:class => "contact_selection", style: "width:220px"}) %>
+      </div>
+
+  <div class="field">
+
+  
+
+    <% if params[:rut_trabajador] %>
+    
+    <%= form.label :rut_trabajador, 'Rut Trabajador' %> <br>
+    <%= form.text_field :rut_trabajador, id: :assignbenefit_rut_trabajador, value: params[:rut_trabajador], hidden: true %>
+    <%= params[:rut_trabajador] %> 
+
+   <% else %>
+
+      <%= form.label :rut_trabajador, 'Rut Trabajador' %> <br>
+      <%= form.text_field :rut_trabajador, id: :assignbenefit_rut_trabajador, placeholder: "13832057-K", :class => 'textForm' %><br>
+
+
+      
+  <%end%>
+
+  </div>
+
+ <% if params[:rut_trabajador] %>
+  <div class="field">
+
+    <%= form.label :rut_beneficiario, 'Beneficiario' %><br>
+    <%# form.text_field :rut_beneficiario, id: :assignbenefit_rut_beneficiario, :class => 'textForm' %><br>
+    <%= form.collection_select :rut_beneficiario, @beneficiarios.all+[Familiartrabajador.new(rut: params[:rut_trabajador], nombre: "El propio trabajador")], :rut, :nombre, include_blank: true %>
+
+  </div>
+
+
+  <div class="field">
+    <%# form.label :relacion, 'Parentezco' %>
+    <%# form.text_field :relacion, id: :assignbenefit_relacion, :class => 'textForm' %>
+  </div>
+
+  <div class="field">
+    <%# form.label :fecha_nacimiento %>
+    <%# form.date_select :fecha_nacimiento, id: :assignbenefit_fecha_nacimiento %>
+  </div>
+
+<% elsif params[:rut_trabajador] && @beneficiarios.nil? %>
+
+<div class="field">
+
+    <%= form.label :rut_beneficiario, 'Beneficiario' %><br>
+    <%= form.text_field :rut_beneficiario, id: :assignbenefit_rut_beneficiario, :class => 'textForm' %><br>
+</div>
+
+<div class="field">
+    <%= form.label :relacion, 'Parentezco' %>
+    <%= form.text_field :relacion, id: :assignbenefit_relacion, :class => 'textForm' %>
+</div>
+
+<div class="field">
+    <%= form.label :fecha_nacimiento %>
+    <%= form.date_select :fecha_nacimiento, id: :assignbenefit_fecha_nacimiento %>
+</div>
+
+
+
+  <% end %>
+
+
+
+
+ <div class="field">
+  <% if params[:obra_id] %>
+
+    <% @obra = Obra.where(codigo: params[:obra_id]) %>
+
+    <%= form.label :obra_id, 'Codigo Obra' %><br>
+    <%= form.text_field :obra_id, id: :assignbenefit_obra_id, value: @obra[0].id, hidden: true %>
+    <%= params[:obra_id] %>
+
+<% else %>
+    <%= form.label :obra_id, 'Codigo Obra' %><br>
+    <%= form.text_field :obra_id, id: :assignbenefit_obra_id, :class => 'textForm' %><br>
+
+<%end%>
+</div>
+
+
+
+
+
+  <div class="actions">
+    <%= form.submit "Asignar", :class => 'btn btn-green btn-lg btn-block' %>
+  </div>
+<% end %>

@@ -1,0 +1,43 @@
+<h2>Configurar perfil </h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true %>
+  </div>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :password, "Nueva Contraseña" %> <i>(Deje este campo en blanco si no quiere cambiar su contraseña)</i><br />
+    <%= f.password_field :password, autocomplete: "off" %>
+    <% if @minimum_password_length %>
+      <br />
+      <em><%= @minimum_password_length %> characters minimum</em>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation, "Confirmar Nueva Contraseña" %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :current_password, "Contraseña Actual" %> <i>(Ingrese su contraseña actual para validar)</i><br />
+    <%= f.password_field :current_password, autocomplete: "off" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Actualizar", :class => 'btn btn-green' %>
+  </div>
+<% end %>
+
+<h3>Borrar mi cuenta</h3>
+
+<p>Esta acción no se puede revertir <%= button_to "Borrar", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, :class => 'btn btn-green' %></p>
+
+<%= link_to "Volver", :back %>

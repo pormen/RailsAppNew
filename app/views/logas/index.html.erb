@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+<% if current_lyduser.admin_role?%>
+
+<h1>LOG Atencion Social</h1>
+
+<%= link_to('Actualizar LOG', {:action=>'index', :name => "actualizar"}, data: {:confirm=>'¿Está seguro? Esta operación podria tomar algunos minutos.'}) %>
+
+
+
+<table>
+  <thead>
+    <tr>
+      
+      <th>Obra</th>
+      <th>Rut atendido</th>
+      <th>Nombre atendido</th>
+      <th>Telefono</th>
+      <th>Tipo consulta</th>
+      <th>Solucion</th>
+      <th>Estado</th>
+      <th>Subcontratatista?</th>
+      <th>Supervisor</th>
+      <th>Descripcion</th>
+      
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @logas.each do |loga| %>
+      <tr>
+        <td><%= loga.codigo_obra %></td>
+        <td><%= loga.rut_atendido %></td>
+        <td><%= loga.nombre_atendido %></td>
+        <td><%= loga.telefono %></td>
+        <td><%= loga.aspcategory_name %></td>
+        <td><%= loga.solucion %></td>
+        <td><%= loga.estado %></td>
+        <td><%= loga.subcontrato %></td>
+        <td><%= loga.supervisor %></td>
+        <td><%= loga.descripcion %></td>
+        
+        
+        <td><%= link_to 'Show', loga %></td>
+        <td><%= link_to 'Edit', edit_loga_path(loga) %></td>
+        <td><%= link_to 'Destroy', loga, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Loga', new_loga_path %>
+<%end%>

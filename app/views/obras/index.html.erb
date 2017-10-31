@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Obras</h1>
+
+
+<%# link_to "Actualizar obras", :controller => :obras, :method => :index, :data => {:confirm => 'Are you sure?'}, :name => "actualizar"  %>
+
+<%= link_to('Actualizar Obras', {:action=>'index', :name => "actualizar"}, data: {:confirm=>'¿Está seguro? Esta operación podria tomar algunos minutos.'}) %>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Direccion</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @obras.order('created_at DESC').each do |obra| %>
+      <tr>
+        <td><%= obra.nombre %></td>
+        <td><%= obra.direccion %></td>
+        <td><%= link_to 'Show', obra %></td>
+        <td><%= link_to 'Edit', edit_obra_path(obra) %></td>
+        <td><%= link_to 'Destroy', obra, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Obra', new_obra_path %>

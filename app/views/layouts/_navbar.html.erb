@@ -1,0 +1,39 @@
+<div class="collapse" id="exCollapsingNavbar">
+  <div class="collapse-bg p-a-1">
+    <div class='card'>
+      <ul class="list-group list-group-flush">
+      </ul>
+    </div>
+  </div>
+</div>
+
+<nav class="navbar navbar-light bg-faded">
+  <div class='container'>
+    <a class='navbar-brand' href='http://localhost:3000/ld/index'>
+      LD<span class='light'>Constructora</span>
+    </a>
+    <a class='navbar-brand' href='http://localhost:3000/asformularies'>
+      Atención<span class='light'>Social</span>
+    </a>
+    <a class='navbar-brand' href='http://localhost:3000/logas'>
+      L<span class='light'>OG</span>
+    </a>
+
+
+    
+    <ul class="nav navbar-nav pull-sm-right hidden-xs-down">
+      
+    </ul>
+  </div>
+
+  
+      <li><%= link_to "Edit profile", edit_lyduser_registration_path %></li>
+      <li><%= link_to "Sign up", new_lyduser_registration_path %></li>
+      <li><%= link_to "Login", new_lyduser_session_path %></li>
+      <li role="separator" class="divider"></li>
+      <li><%= link_to "Logout", destroy_lyduser_session_path, method: :delete %></li>
+   
+
+
+
+</nav>

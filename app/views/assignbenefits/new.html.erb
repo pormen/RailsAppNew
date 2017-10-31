@@ -1,0 +1,100 @@
+<link href='<%= asset_url("css/bootstrap.min.css") %>' rel="stylesheet" type="text/css">
+<link href='<%= asset_url("css/font-awesome.min.css") %>' rel="stylesheet">
+<link href='<%= asset_url("css/style-55.css") %>' rel="stylesheet">
+<link href='<%= asset_url("css2/stylesLD.css") %>' rel="stylesheet" type="text/css">
+
+
+<h1>Asignar beneficios</h1>
+
+<div class="container">
+
+      <div class="sidebar1">
+        <div align="left">
+        	<%= render 'form', assignbenefit: @assignbenefit %>
+        </div>
+
+       </div>
+
+
+       <div class="contentForm">
+			<div align="center">
+  			<table >
+
+        <%if params[:nombre_solicitante] %>
+               <%= params[:nombre_solicitante] %>
+               <%end  %>
+               <br>
+
+               <%if  params[:obra_id] %>
+
+                  <% oname = Obra.where(codigo: params[:obra_id]) %>
+                    <% if !oname[0].nil? %>
+                    <%= oname[0].nombre %>
+                    <% end %>
+
+                <% end %>
+
+           <tr>
+            <th width="(100/x)%">Beneficio</th>
+            <th width="(100/x)%">Rut Trabajador</th>
+            <th width="(100/x)%">Rut Beneficiario</th>
+            <th width="(100/x)%">Relación</th>
+            <th width="(100/x)%">F.Nacimiento</th>
+            <th width="(100/x)%">Fecha</th>
+            <th width="(100/x)%">CentroCosto</th>
+           </tr>
+           <tbody>
+             
+               <% if params[:rut_trabajador] %>
+               <% assign = Assignbenefit.where(:rut_trabajador => params[:rut_trabajador]).order('created_at DESC').take(20) %>
+
+
+
+               <% assign.each do |ab| %>
+                        <tr>
+                          
+                          <td><%= ab.benefit.nombre %></td>
+          
+                          <td><%= ab.rut_trabajador %></td>
+
+                          <%if ab.rut_trabajador != ab.rut_beneficiario %>
+                          <% nombref = Familiartrabajador.where(rut: ab.rut_beneficiario).where(rut_trabajador: ab.rut_trabajador) %>
+                          <%  if !nombref.empty? %>
+                          <td><%= nombref[0].nombre %></td>
+                          <%  else %>
+                          <td>lel</td>
+                          <%  end %>
+                          <%else %>
+                          <td>iguales</td>
+                          <%end %>
+
+                          <td><%= ab.relacion %></td>
+                          <td><%= ab.fecha_nacimiento.strftime("%d %b %y") %></td>
+
+                          <td><%= ab.created_at.strftime("%d %b %y") %></td>
+                          
+                          <td><%= ab.obra_id %></td>
+                          
+
+                        </tr>
+                     
+                      <% end %>
+
+
+
+               <% end %>
+
+           </tbody>
+        </table>
+
+
+			</div>
+	   </div>
+
+
+</div>
+
+
+
+
+<%= link_to 'Back', assignbenefits_path %>

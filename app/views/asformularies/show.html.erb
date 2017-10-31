@@ -1,0 +1,107 @@
+<link href='<%= asset_url("css/bootstrap.min.css") %>' rel="stylesheet" type="text/css">
+<link href='<%= asset_url("css/font-awesome.min.css") %>' rel="stylesheet">
+<link href='<%= asset_url("css/style-273.css") %>' rel="stylesheet">
+<link href='<%= asset_url("css2/stylesLD.css") %>' rel="stylesheet" type="text/css">
+
+
+<div class="container">
+  <div class="content"> 
+    <div class="ui-273">
+      <div align="left" style="box-shadow:0px 0px 15px rgba(0,0,0,0.1);">
+
+
+
+
+
+  <strong>Rut atendido:</strong>
+  <br><i><%= @asformulary.rut_atendido %> </i><br>
+
+
+  <strong>Codigo obra:</strong>
+  <br><i><%= @asformulary.codigo_obra %> </i><br>
+
+
+  <strong>Telefono:</strong>
+  <br><i><%= @asformulary.telefono %> </i><br>
+
+
+  <strong>Asistente Social:</strong>
+  <br><i><%= @asformulary.lyduser.email %> </i><br>
+
+
+  <strong>Nombre atendido:</strong>
+  <br><i><%= @asformulary.nombre_atendido %> </i><br>
+
+
+  <strong>Apellido paterno:</strong>
+  <br><i><%= @asformulary.apellido_paterno %> </i><br>
+
+
+  <strong>Apellido materno:</strong>
+  <br><i><%= @asformulary.apellido_materno %> </i><br>
+
+
+  <strong>Aspcategory:</strong>
+ <br><i> <%= @asformulary.aspcategory.nombre %> </i><br>
+
+
+  <strong>Solucion:</strong>
+  <br><i><%= @asformulary.solucion %> </i><br>
+
+  <strong>Beneficio Asociado:</strong>
+  <br><i><%= @asformulary.benefit.nombre %> </i><br>
+
+
+  <strong>¿Caso Cerrado?:</strong>
+  
+
+        <% if @asformulary.estado == true %>
+        <br><i><%="SI"%></i><br>
+        <% else %>
+        <br><i><%= "NO"%></i><br>
+        <%end%>
+
+
+<strong>¿Subcontrato?:</strong>
+
+        <% if @asformulary.subcontrato == true %>
+        <br><i><%="SI"%></i><br>
+        <% else %>
+       <br><i><%= "NO"%></i><br>
+        <%end%>
+
+
+  
+  
+
+
+  <strong>Nombre supervisor:</strong>
+  <br><i><%= @asformulary.nombre_supervisor %> </i><br>
+
+  <strong>Descripcion:</strong>
+  <br><i><%= @asformulary.descripcion %> </i><br>
+
+
+
+
+
+<%= link_to 'Agregar Seguimiento', newseg_asformulary_path(@asformulary) %> |
+<%= link_to 'Volver', asformularies_path %>
+
+<br>
+<br>
+<i>IMPORTANTE: Asegurece de buscar la atención más reciente de un caso antes de agregar un seguimiento.</i>
+<br>
+<br>
+
+<%= button_to "Cerrar Caso", asformulary_path, name: "cerrar", method: "get", class: 'btn btn-green btn-lg btn-block' %>
+<%# link_to "Cerrar Caso", asformulary_path, name: "cerrar", class: "button button1" %>
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
